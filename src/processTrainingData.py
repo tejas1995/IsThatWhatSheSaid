@@ -2,6 +2,8 @@ import nltk
 import pickle
 
 from nltk.corpus import brown
+from nltk.tokenize.treebank import TreebankWordTokenizer as WT
+
 
 def processBrownCorpusData():
 
@@ -21,3 +23,23 @@ def processBrownCorpusData():
 
 processBrownCorpusData()
 
+
+def processTWSSData():
+
+    '''
+    Pickle the TWSS sentences
+    '''
+
+    twss_file = open('../data/TWSS_sents.txt')
+    twss_sents = twss_file.readlines()
+    twss_tokenized_sents = []
+
+    sent_detector = nltk.data.load('tokenizers/punkt/english.pickle')
+    for sent in twss_sents:
+        twss_tokenized_sents.append(WT().tokenize(sent.strip()))
+
+    twss_pickle = open('../data/TWSS_data.pk', 'wb')
+    pickle.dump(twss_sents, twss_pickle)
+    twss_pickle.close()
+
+processTWSSData()
