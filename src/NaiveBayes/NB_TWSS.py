@@ -22,20 +22,24 @@ def splitTestTrainData(filename, is_twss):
     return train_sents, train_y, test_sents, test_y
 
 
-b_train_sents, b_train_y, b_test_sents, b_test_y = splitTestTrainData('../../data/brown_data.pk', 0)
-t_train_sents, t_train_y, t_test_sents, t_test_y = splitTestTrainData('../../data/TWSS_data.pk', 1)
+def twss():
+    b_train_sents, b_train_y, b_test_sents, b_test_y = splitTestTrainData('../../data/brown_data.pk', 0)
+    t_train_sents, t_train_y, t_test_sents, t_test_y = splitTestTrainData('../../data/TWSS_data.pk', 1)
 
-print len(b_train_sents), len(b_train_y), len(t_train_sents), len(t_train_y)
+    print len(b_train_sents), len(b_train_y), len(t_train_sents), len(t_train_y)
 
-train_sents = b_train_sents + t_train_sents
-train_y = b_train_y + t_train_y
-test_sents = b_test_sents + t_test_sents 
-test_y = b_test_y + t_test_y
+    train_sents = b_train_sents + t_train_sents
+    train_y = b_train_y + t_train_y
+    test_sents = b_test_sents + t_test_sents 
+    test_y = b_test_y + t_test_y
 
-print 'Len of train_sents:', len(train_sents)
-print 'Len of train_y:', len(train_y)
-print 'Len of test_sents:', len(test_sents)
-print 'Len of test_y:', len(test_y)
+    wordset = buildWordset(train_sents)
+    train_X = extractFeatures(train_sents, wordset)     # Build unigram feature vector for training data
+    test_X = extractFeatures(test_sents, wordset)       # Build unigram feature vector for test data
 
+    svm_classifier = classifier(train_X, train_y)
+    predicted_y = predict(classifier, test_y)
+    evaluate(predicted_y, test_y)
 
-
+if __name__ == '__main__':
+    twss()
