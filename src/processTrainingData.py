@@ -5,7 +5,7 @@ from nltk.corpus import brown
 from nltk.tokenize.treebank import TreebankWordTokenizer as WT
 
 
-def processBrownCorpusData():
+def generateBrownPickle():
 
     '''
     Retrieve 120 sentences from each category in the Brown corpus.
@@ -17,17 +17,21 @@ def processBrownCorpusData():
         for sent in brown.sents(categories=cat)[:1220]:
             brown_sents.append(sent)
 
+    # Convert all sentences to lowercase
+    for sent in brown_sents:
+        sent = [w.lower() for w in sent]
+
     brown_pickle = open('../data/brown_data.pk', 'wb')
     pickle.dump(brown_sents, brown_pickle)
     brown_pickle.close()
 
-processBrownCorpusData()
+generateBrownPickle()
 
 
-def processTWSSData():
+def generateTWSSPickle():
 
     '''
-    Pickle the TWSS sentences
+    Tokenize and pickle the TWSS sentences
     '''
 
     twss_file = open('../data/TWSS_sents.txt')
@@ -38,8 +42,12 @@ def processTWSSData():
     for sent in twss_sents:
         twss_tokenized_sents.append(WT().tokenize(sent.strip()))
 
+    # Convert all sentences to lowercase
+    for sent in twss_tokenized_sents:
+        sent = [w.lower() for w in sent]
+
     twss_pickle = open('../data/TWSS_data.pk', 'wb')
     pickle.dump(twss_sents, twss_pickle)
     twss_pickle.close()
 
-processTWSSData()
+generateTWSSPickle()
