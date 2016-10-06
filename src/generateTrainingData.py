@@ -14,7 +14,7 @@ def generateBrownPickle():
 
     brown_sents = []
     for cat in brown.categories():
-        for sent in brown.sents(categories=cat)[:1220]:
+        for sent in brown.sents(categories=cat)[:120]:
             brown_sents.append(sent)
 
     # Convert all sentences to lowercase
