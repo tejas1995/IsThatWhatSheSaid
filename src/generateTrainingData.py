@@ -2,7 +2,7 @@ import nltk
 import pickle
 
 from nltk.corpus import brown
-from nltk.tokenize.treebank import TreebankWordTokenizer as WT
+from nltk.tokenize.treebank import TreebankWordTokenizer as TWT
 
 
 def generateBrownPickle():
@@ -38,9 +38,11 @@ def generateTWSSPickle():
     twss_sents = twss_file.readlines()
     twss_tokenized_sents = []
 
-    sent_detector = nltk.data.load('tokenizers/punkt/english.pickle')
+    # Tokenize the TWSS sentences and encode in ascii 
     for sent in twss_sents:
-        twss_tokenized_sents.append(WT().tokenize(sent.strip()))
+        tokenized_sent = TWT().tokenize(sent.strip())
+        tokenized_sent = [token.decode('utf-8').encode('ascii', 'ignore') for token in tokenized_sent]
+        twss_tokenized_sents.append(tokenized_sent)
 
     # Convert all sentences to lowercase
     for sent in twss_tokenized_sents:
