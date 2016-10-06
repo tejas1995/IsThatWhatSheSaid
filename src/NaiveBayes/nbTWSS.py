@@ -17,10 +17,10 @@ def splitTestTrainData(filename, is_twss):
 
     pickle_file = open(filename)
     sents = pickle.load(pickle_file)
-    for sent in sents[:-100]:
+    for sent in sents[:-200]:
         train_sents.append(sent)
         train_y.append(is_twss)
-    for sent in sents[-100:]:
+    for sent in sents[-200:]:
         test_sents.append(sent)
         test_y.append(is_twss)
     pickle_file.close()
@@ -41,20 +41,28 @@ def twss():
     b_train_sents, b_train_y, b_test_sents, b_test_y = splitTestTrainData('../../data/brown_data.pk', 0)
     t_train_sents, t_train_y, t_test_sents, t_test_y = splitTestTrainData('../../data/TWSS_data.pk', 1)
 
-    # print len(b_train_sents), len(b_train_y), len(t_train_sents), len(t_train_y)
-
+    # Create training and test data by joining Brown and TWSS sets
     train_sents = b_train_sents + t_train_sents
     train_y = b_train_y + t_train_y
     test_sents = b_test_sents + t_test_sents 
     test_y = b_test_y + t_test_y
 
+    print 'Number of training examples:', len(train_sents)
+    print 'Number of testing examples:', len(test_sents)
+
+    # Build vocalubary of words from training sentences
     print "Building wordset..."	
     wordset = buildWordset(train_sents)
-    print "Extracting features for training data..."
-    train_X = extractFeatures(train_sents, wordset)     # Build unigram feature vector for training data
-    print "Extraction features for test data..."
-    test_X = extractFeatures(test_sents, wordset)       # Build unigram feature vector for test data
 
+    # Build unigram feature vector for training data
+    print "Extracting features for training data..."
+    train_X = extractFeatures(train_sents, wordset)
+
+    # Build unigram feature vector for test data
+    print "Extracting features for test data..."
+    test_X = extractFeatures(test_sents, wordset)
+
+    # Classify, predict, evaluate
     nb_classifier = classifier(train_X, train_y)
     predicted_y = predict(nb_classifier, test_X)
     evaluate(predicted_y, test_y, test_sents)
