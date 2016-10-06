@@ -47,7 +47,7 @@ def generateTWSSPickle():
         sent = [w.lower() for w in sent]
 
     twss_pickle = open('../data/TWSS_data.pk', 'wb')
-    pickle.dump(twss_sents, twss_pickle)
+    pickle.dump(twss_tokenized_sents, twss_pickle)
     twss_pickle.close()
 
 generateTWSSPickle()
