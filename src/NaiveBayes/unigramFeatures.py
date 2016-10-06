@@ -5,7 +5,7 @@ def buildWordset(train_sents):
     for sent in train_sents:
         wordset.update(sent)
 
-    return wordset
+    return list(wordset)
 
 
 def extractFeatures(list_sents, wordset):
