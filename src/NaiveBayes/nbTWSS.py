@@ -1,8 +1,7 @@
 import pickle 
 import nltk
-
 from unigramFeatures import *
-# from NBClassifier import *
+from nbClassifier import *
 
 
 def splitTestTrainData(filename, is_twss):
@@ -49,17 +48,6 @@ def twss():
     test_sents = b_test_sents + t_test_sents 
     test_y = b_test_y + t_test_y
 
-    for sent in train_sents:
-        for w in sent:
-            try:
-                w.decode('ascii')
-            except UnicodeDecodeError:
-                print w, 'was not an ascii-encoded unicode string'
-                print sent
-                print isinstance(w, str), ',', isinstance(w, unicode)
-            else:
-                continue
-
     print "Building wordset..."	
     wordset = buildWordset(train_sents)
     print "Extracting features for training data..."
@@ -67,9 +55,9 @@ def twss():
     print "Extraction features for test data..."
     test_X = extractFeatures(test_sents, wordset)       # Build unigram feature vector for test data
 
-    # svm_classifier = classifier(train_X, train_y)
-    # predicted_y = predict(classifier, test_y)
-    # evaluate(predicted_y, test_y)
+    nb_classifier = classifier(train_X, train_y)
+    predicted_y = predict(nb_classifier, test_X)
+    evaluate(predicted_y, test_y, test_sents)
 
 if __name__ == '__main__':
     twss()
