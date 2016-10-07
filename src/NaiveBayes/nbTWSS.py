@@ -4,7 +4,7 @@ from unigramFeatures import *
 from nbClassifier import *
 
 
-def splitTestTrainData(filename, is_twss):
+def splitTestTrainData(filename, is_twss, size_training):
 
     '''
     split the training data by using last 100 sentences of given file as test data
@@ -17,10 +17,10 @@ def splitTestTrainData(filename, is_twss):
 
     pickle_file = open(filename)
     sents = pickle.load(pickle_file)
-    for sent in sents[:-200]:
+    for sent in sents[:size_training]:
         train_sents.append(sent)
         train_y.append(is_twss)
-    for sent in sents[-200:]:
+    for sent in sents[size_training:]:
         test_sents.append(sent)
         test_y.append(is_twss)
     pickle_file.close()
@@ -38,8 +38,8 @@ def twss():
     Test classifier using test sentences
     '''
 
-    b_train_sents, b_train_y, b_test_sents, b_test_y = splitTestTrainData('../../data/brown_data.pk', 0)
-    t_train_sents, t_train_y, t_test_sents, t_test_y = splitTestTrainData('../../data/TWSS_data.pk', 1)
+    b_train_sents, b_train_y, b_test_sents, b_test_y = splitTestTrainData('../../data/brown_data.pk', 0, 2000)
+    t_train_sents, t_train_y, t_test_sents, t_test_y = splitTestTrainData('../../data/TWSS_data.pk', 1, 2000)
 
     # Create training and test data by joining Brown and TWSS sets
     train_sents = b_train_sents + t_train_sents
