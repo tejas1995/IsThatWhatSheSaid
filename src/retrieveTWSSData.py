@@ -22,7 +22,7 @@ def makeSoup(url):
     return soup
 
 
-for n in range(0, 200):
+for n in range(0, 240):
     print n
 
     url = "http://twssstories.com/node?page=" + str(n)
@@ -37,10 +37,9 @@ for n in range(0, 200):
             jokeText = jokeDiv.find('p').string
             try:
                 pos_quotes = [pos for pos, char in  enumerate(jokeText) if char == '"']
-                setupLines = sent_detector.tokenize(jokeText[pos_quotes[-2]+1:pos_quotes[-1]].strip())
-                for line in setupLines:
-                    if len(line.split(' ')) >= 2:
-                        list_TWSS_sents.append(line)
+                joke = jokeText[pos_quotes[-2]+1:pos_quotes[-1]].strip()
+                if len(joke.split(' ')) >= 2:
+                    list_TWSS_sents.append(joke)
 
             except:
                 continue
