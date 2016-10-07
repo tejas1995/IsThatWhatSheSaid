@@ -8,13 +8,13 @@ from nltk.tokenize.treebank import TreebankWordTokenizer as TWT
 def generateBrownPickle():
 
     '''
-    Retrieve 120 sentences from each category in the Brown corpus.
+    Retrieve 150 sentences from each category in the Brown corpus.
     Pickle the data
     '''
 
     brown_sents = []
     for cat in brown.categories():
-        for sent in brown.sents(categories=cat)[:120]:
+        for sent in brown.sents(categories=cat)[:150]:
             brown_sents.append(sent)
 
     # Convert all sentences to lowercase
