@@ -1,6 +1,6 @@
 import pickle 
 import nltk
-from bigramFeatures import *
+from features import *
 from svmClassifier import *
 from os import sys, path
 
@@ -35,17 +35,33 @@ def twss():
     print 'Number of training examples:', len(train_sents)
     print 'Number of testing examples:', len(test_sents)
 
+    '''
+    # Use the below for testing with unigram features
+
     # Build vocalubary of words from training sentences
     print "Building wordset..."	
     wordset = buildWordset(train_sents)
 
     # Build unigram feature vector for training data
     print "Extracting features for training data..."
-    train_X = extractFeatures(train_sents, wordset)
+    train_X = extractUnigramFeatures(train_sents, wordset)
 
     # Build unigram feature vector for test data
     print "Extracting features for test data..."
-    test_X = extractFeatures(test_sents, wordset)
+    test_X = extractUnigramFeatures(test_sents, wordset)
+    '''
+
+    # Building bigram vocabulary from training sentences
+    print "Building bigram vocabulary..."
+    bigramVocab = buildBigramVocab(train_sents)
+ 
+    # Build bigram feature vector for training data
+    print "Extracting features for training data..."
+    train_X = extractBigramFeatures(train_sents, bigramVocab)
+
+    # Build bigram feature vector for test data
+    print "Extracting features for test data..."
+    test_X = extractBigramFeatures(test_sents, bigramVocab)
 
     # Classify, predict, evaluate
     svm_classifier = classifier(train_X, train_y)

@@ -11,6 +11,7 @@ def classifier(train_X, train_y):
     svmClassifier.fit(train_X, train_y)
     return svmClassifier
 
+
 def predict(classifier, test_X):
 
     '''
@@ -21,10 +22,11 @@ def predict(classifier, test_X):
     pred_y = classifier.predict(test_X)
     return pred_y
 
+
 def evaluate(pred_y, test_y, test_sents):
 
     '''
-    Evaluates predictions of NB classifier
+    Evaluates predictions of SVM classifier
     '''
 
     print 'Evaluating predictions...'
