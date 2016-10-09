@@ -15,7 +15,7 @@ def buildWordset(train_sents):
     return list(wordset)
 
 
-def buildBigramSet(train_sents):
+def buildBigramVocab(train_sents):
 
     bigramCount = collections.defaultdict(int)
 
@@ -36,5 +36,16 @@ def extractUnigramFeatures(list_sents, wordset):
 
     for sent in list_sents:
         sent_features.append([sent.count(w) for w in wordset])
+
+    return sent_features
+
+
+def extractBigramFeatures(list_sents, bigramVocab):
+
+    sent_features = []
+
+    for sent in list_sents:
+        sent_bigrams = list(nltk.bigrams([START_SYMBOL] + sent + [STOP_SYMBOL]))
+        sent_features.append([sent_bigrams.count(bg) for bg in bigramVocab])
 
     return sent_features
