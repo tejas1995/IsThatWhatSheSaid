@@ -28,8 +28,6 @@ def generateBrownPickle():
     pickle.dump(brown_sents, brown_pickle)
     brown_pickle.close()
 
-generateBrownPickle()
-
 
 def generateTWSSPickle():
 
@@ -56,5 +54,33 @@ def generateTWSSPickle():
     twss_pickle = open(twss_pickle_file, 'wb')
     pickle.dump(twss_tokenized_sents, twss_pickle)
     twss_pickle.close()
+    print "This"
 
-generateTWSSPickle()
+
+def splitTestTrainData(filename, is_twss, size_training):
+
+    '''
+    split the training data by using first size_training sentences of given file as training data and rest as test data
+    '''
+    train_sents = []
+    train_y = []
+
+    test_sents = []
+    test_y = []
+
+    pickle_file = open(filename)
+    sents = pickle.load(pickle_file)
+    for sent in sents[:size_training]:
+        train_sents.append(sent)
+        train_y.append(is_twss)
+    for sent in sents[size_training:]:
+        test_sents.append(sent)
+        test_y.append(is_twss)
+    pickle_file.close()
+
+    return train_sents, train_y, test_sents, test_y
+
+
+if __name__ == '__main__':
+    generateBrownPickle()
+    generateTWSSPickle()

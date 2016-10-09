@@ -7,31 +7,7 @@ from os import sys, path
 if __name__ == '__main__' and __package__ is None:
     sys.path.append(path.dirname(path.dirname(path.abspath(__file__))))
 
-import generatePickle
-
-
-def splitTestTrainData(filename, is_twss, size_training):
-
-    '''
-    split the training data by using last 100 sentences of given file as test data
-    '''
-    train_sents = []
-    train_y = []
-
-    test_sents = []
-    test_y = []
-
-    pickle_file = open(filename)
-    sents = pickle.load(pickle_file)
-    for sent in sents[:size_training]:
-        train_sents.append(sent)
-        train_y.append(is_twss)
-    for sent in sents[size_training:]:
-        test_sents.append(sent)
-        test_y.append(is_twss)
-    pickle_file.close()
-
-    return train_sents, train_y, test_sents, test_y
+from generatePickle import splitTestTrainData
 
 
 def twss():
