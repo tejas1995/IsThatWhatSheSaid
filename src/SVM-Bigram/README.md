@@ -1,13 +1,13 @@
-# Naive Bayes TWSS Classifier
+# SVM TWSS Classifier with Bigrams
 
-Uses a Naive Bayes classifier to detect TWSS jokes
+Uses an SVM classifier with bigram features to detect TWSS jokes
 
 ## Running
 
 Simply run
 
 ```
-python nbTWSS.py
+python svmTWSS.py
 ```
 
 ## Results
@@ -19,4 +19,4 @@ Number of testing examples: 474 (250 negative, 224 positive)
 | Features | Precision | Recall | F1 Score |
 | --- | --- | --- | --- |
 | Only unigram | 94.3 % | 95.98 % | 0.9513 |
-| Only bigram | | | |
+| Only bigram | 95.24 % | 89.28 % | 0.9216 |
