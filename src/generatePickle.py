@@ -4,6 +4,8 @@ import pickle
 from nltk.corpus import brown
 from nltk.tokenize.treebank import TreebankWordTokenizer as TWT
 
+from os import path
+
 
 def generateBrownPickle():
 
@@ -21,7 +23,8 @@ def generateBrownPickle():
     for sent in brown_sents:
         sent = [w.lower() for w in sent]
 
-    brown_pickle = open('../data/brown_data.pk', 'wb')
+    brown_file = path.dirname(path.dirname(path.abspath(__file__))) + '/data/brown_data.pk'
+    brown_pickle = open(brown_file, 'wb')
     pickle.dump(brown_sents, brown_pickle)
     brown_pickle.close()
 
@@ -34,7 +37,8 @@ def generateTWSSPickle():
     Tokenize and pickle the TWSS sentences
     '''
 
-    twss_file = open('../data/TWSS_sents.txt')
+    twss_sents_file = path.dirname(path.dirname(path.abspath(__file__))) + '/data/TWSS_sents.txt'
+    twss_file = open(twss_sents_file)
     twss_sents = twss_file.readlines()
     twss_tokenized_sents = []
 
@@ -48,7 +52,8 @@ def generateTWSSPickle():
     for sent in twss_tokenized_sents:
         sent = [w.lower() for w in sent]
 
-    twss_pickle = open('../data/TWSS_data.pk', 'wb')
+    twss_pickle_file = path.dirname(path.dirname(path.abspath(__file__))) + '/data/TWSS_data.pk'
+    twss_pickle = open(twss_pickle_file, 'wb')
     pickle.dump(twss_tokenized_sents, twss_pickle)
     twss_pickle.close()
 

@@ -2,6 +2,12 @@ import pickle
 import nltk
 from unigramFeatures import *
 from nbClassifier import *
+from os import sys, path
+
+if __name__ == '__main__' and __package__ is None:
+    sys.path.append(path.dirname(path.dirname(path.abspath(__file__))))
+
+import generatePickle
 
 
 def splitTestTrainData(filename, is_twss, size_training):
@@ -38,8 +44,11 @@ def twss():
     Test classifier using test sentences
     '''
 
-    b_train_sents, b_train_y, b_test_sents, b_test_y = splitTestTrainData('../../data/brown_data.pk', 0, 2000)
-    t_train_sents, t_train_y, t_test_sents, t_test_y = splitTestTrainData('../../data/TWSS_data.pk', 1, 2000)
+    brown_file = path.dirname(path.dirname(path.dirname(path.abspath(__file__)))) + '/data/brown_data.pk'
+    twss_file = path.dirname(path.dirname(path.dirname(path.abspath(__file__)))) + '/data/TWSS_data.pk' 
+
+    b_train_sents, b_train_y, b_test_sents, b_test_y = splitTestTrainData(brown_file, 0, 2000)
+    t_train_sents, t_train_y, t_test_sents, t_test_y = splitTestTrainData(twss_file, 1, 2000)
 
     # Create training and test data by joining Brown and TWSS sets
     train_sents = b_train_sents + t_train_sents
