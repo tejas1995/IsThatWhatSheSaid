@@ -12,12 +12,15 @@ python nbTWSS.py
 
 ## Results
 
-Number of training examples: 4000 (2000 negative, 2000 positive)
+Training and Testing Data:
 
-Number of testing examples: 474 (250 negative, 224 positive)
+| | TWSS (+) | FML (-) | TFLN (-) | Brown (-) | Total (-) |
+| --- | --- | --- | --- | --- | --- |
+| Training | 2000 | 666 | 666 | 666 | 1998 |
+| Testing | 224 | 738 | 734 | 1584 | 3056 |
 
-Precision: 87.45 %
+Precision: 30.43 %
 
-Recall: 96.42 %
+Recall: 88.84 %
 
-F1 Score: 0.9172
+F1 Score: 0.4533
