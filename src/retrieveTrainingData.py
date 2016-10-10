@@ -65,14 +65,14 @@ def retrieveTWSSData():
 def retrieveTFLNData():
 
     '''
-    Retrieves upto 1400 texts as possible from
+    Retrieves upto 1400 texts  from
     www.TextsFromLastNight.com
     '''
 
     list_TFLN_sents = []
 
     for n in range(1, 101):
-        # print n
+        print n
 
         url = "http://www.textsfromlastnight.com/texts/page:" + str(n)
         soup = makeSoup(url)
@@ -84,7 +84,7 @@ def retrieveTFLNData():
                 if 'Text' in textStr and 'Last' in textStr and 'Night' in textStr:
                     continue
                 else:
-                    list_TFLN_sents.append(textStr)                    
+                    list_TFLN_sents.append(textStr) 
 
         except:
             continue
@@ -95,7 +95,41 @@ def retrieveTFLNData():
     for line in list_TFLN_sents:
         TFLN_file.write(line.encode('utf-8')+'\n')
 
+
+def retrieveFMLData():
+
+    '''
+    Retrieves upto  entries from
+    www.fmylife.com/intimacy
+    '''
+
+    list_FML_sents = []
+
+    for n in range(1, 109):
+        print n
+
+        url = "http://www.fmylife.com/intimacy?page=" + str(n) + "#top"
+        soup = makeSoup(url)
+
+        try:
+
+            fmlDivList = soup.find_all(attrs={'class': 'post article cat-intimacy'})
+            fmlDivList += soup.find_all(attrs={'class': 'post article is-spicy cat-intimacy'})
+            for fmlDiv in fmlDivList:
+                fmlStr = fmlDiv.find('p', attrs={'class': 'content'}).string
+                list_FML_sents.append(fmlStr)
+
+        except:
+            continue
+
+
+    FML_file = open('../data/FML_sents.txt', 'w')
+    for line in list_FML_sents:
+        FML_file.write(line.encode('utf-8')+'\n')
+
+
 if __name__ == '__main__':
     # retrieveTWSSData()
     retrieveTFLNData()
+    retrieveFMLData()
 
