@@ -12,11 +12,16 @@ python svmTWSS.py
 
 ## Results
 
-Number of training examples: 4000 (2000 negative, 2000 positive)
+Training and Testing Data:
 
-Number of testing examples: 474 (250 negative, 224 positive)
+| | TWSS (+) | FML (-) | TFLN (-) | Brown (-) | Total (-) |
+| --- | --- | --- | --- | --- | --- |
+| Training | 2000 | 666 | 666 | 666 | 1998 |
+| Testing | 224 | 738 | 734 | 1584 | 3056 |
+
+Results:
 
 | Features | Precision | Recall | F1 Score |
 | --- | --- | --- | --- |
-| Only unigram | 94.3 % | 95.98 % | 0.9513 |
-| Only bigram | 95.24 % | 89.28 % | 0.9216 |
+| Only unigram | 40.48 % | 89.29 % | 0.5571 |
+| Only bigram | 39.25 % | 79.91 % | 0.5265 |
