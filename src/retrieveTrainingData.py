@@ -72,7 +72,7 @@ def retrieveTFLNData():
     list_TFLN_sents = []
 
     for n in range(1, 101):
-        print n
+        # print n
 
         url = "http://www.textsfromlastnight.com/texts/page:" + str(n)
         soup = makeSoup(url)
@@ -89,7 +89,7 @@ def retrieveTFLNData():
         except:
             continue
         
-    print len(list_TFLN_sents)
+    # print len(list_TFLN_sents)
 
     TFLN_file = open('../data/TFLN_sents.txt', 'w')
     for line in list_TFLN_sents:
