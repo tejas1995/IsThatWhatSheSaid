@@ -37,7 +37,6 @@ def retrieveTWSSData():
         url = "http://twssstories.com/node?page=" + str(n)
         soup = makeSoup(url)
 
-        # for i in range(10):
 
         try:
             jokeDivList = soup.find_all(attrs={'class': 'content clear-block'})
@@ -119,6 +118,24 @@ def retrieveFMLData():
             fmlDivList += soup.find_all(attrs={'class': 'post article is-spicy cat-intimacy'})
             for fmlDiv in fmlDivList:
                 fmlStr = fmlDiv.find('p', attrs={'class': 'content'}).string
+
+                # Remove FML at end of text
+                if fmlStr[-4:] == ' FML' or fmlStr[-4:] == ' 5ML':
+                    fmlStr = fmlStr[:-4]
+                elif fmlStr[-5:] == ' FML.':
+                    fmlStr = fmlStr[:-5]
+                else:
+                    print fmlStr
+
+                # Check if the FML ends with a quote, and if so, extract only the quote
+                if fmlStr[-1] == '"':
+                    pos_quotes = [pos for pos, char in  enumerate(fmlStr) if char == '"']
+                    fmlStr = fmlStr[pos_quotes[-2]+1:pos_quotes[-1]].strip()
+
+                # If there are multiple sentences, take only the last one
+                if len(sent_detector.tokenize(fmlStr)) > 1:
+                    fmlStr = sent_detector.tokenize(fmlStr)[-1]
+
                 list_FML_sents.append(fmlStr)
 
         except:
