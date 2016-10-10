@@ -12,6 +12,7 @@ python svmTWSS.py
 
 ## Results
 
+
 Training and Testing Data:
 
 | | TWSS (+) | FML (-) | TFLN (-) | Brown (-) | Total (-) |
@@ -25,3 +26,4 @@ Results:
 | --- | --- | --- | --- |
 | Only unigram | 40.48 % | 89.29 % | 0.5571 |
 | Only bigram | 39.25 % | 79.91 % | 0.5265 |
+
