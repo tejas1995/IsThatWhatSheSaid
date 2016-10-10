@@ -29,32 +29,31 @@ def generateBrownPickle():
     brown_pickle.close()
 
 
-def generateTWSSPickle():
+def generatePickleFromTxt(type_sents):
 
     '''
     Tokenize and pickle the TWSS sentences
     '''
 
-    twss_sents_file = path.dirname(path.dirname(path.abspath(__file__))) + '/data/TWSS_sents.txt'
-    twss_file = open(twss_sents_file)
-    twss_sents = twss_file.readlines()
-    twss_tokenized_sents = []
+    sents_filename = path.dirname(path.dirname(path.abspath(__file__))) + '/data/' + type_sents + '_sents.txt'
+    sents_file = open(sents_filename)
+    sents = sents_file.readlines()
+    tokenized_sents = []
 
     # Tokenize the TWSS sentences and encode in ascii 
-    for sent in twss_sents:
+    for sent in sents:
         tokenized_sent = TWT().tokenize(sent.strip())
         tokenized_sent = [token.decode('utf-8').encode('ascii', 'ignore') for token in tokenized_sent]
-        twss_tokenized_sents.append(tokenized_sent)
+        tokenized_sents.append(tokenized_sent)
 
     # Convert all sentences to lowercase
-    for sent in twss_tokenized_sents:
+    for sent in tokenized_sents:
         sent = [w.lower() for w in sent]
 
-    twss_pickle_file = path.dirname(path.dirname(path.abspath(__file__))) + '/data/TWSS_data.pk'
-    twss_pickle = open(twss_pickle_file, 'wb')
-    pickle.dump(twss_tokenized_sents, twss_pickle)
-    twss_pickle.close()
-    print "This"
+    pickle_file = path.dirname(path.dirname(path.abspath(__file__))) + '/data/' + type_sents + '_data.pk'
+    text_pickle = open(pickle_file, 'wb')
+    pickle.dump(tokenized_sents, text_pickle)
+    text_pickle.close()
 
 
 def splitTestTrainData(filename, is_twss, size_training):
@@ -83,4 +82,6 @@ def splitTestTrainData(filename, is_twss, size_training):
 
 if __name__ == '__main__':
     generateBrownPickle()
-    generateTWSSPickle()
+    generatePickleFromTxt('TWSS')
+    generatePickleFromTxt('TFLN')
+    generatePickleFromTxt('FML')
