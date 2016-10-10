@@ -3,6 +3,8 @@ from urllib2 import urlopen, Request
 import urllib
 import nltk
 import ctypes
+import sys
+
 
 # Set base URLs
 user_agent = "Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.9.0.7) Gecko/2009021910 Firefox/3.0.7"
@@ -129,7 +131,11 @@ def retrieveFMLData():
 
 
 if __name__ == '__main__':
-    # retrieveTWSSData()
-    retrieveTFLNData()
-    retrieveFMLData()
+    
+    if 'TWSS' in sys.argv:
+        retrieveTWSSData()
+    if 'TFLN' in sys.argv:
+        retrieveTFLNData()
+    if 'FML' in sys.argv:
+        retrieveFMLData()
 
