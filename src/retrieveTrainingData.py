@@ -65,44 +65,37 @@ def retrieveTWSSData():
 def retrieveTFLNData():
 
     '''
-    Retrieves as many texts as possible from
+    Retrieves upto 1400 texts as possible from
     www.TextsFromLastNight.com
     '''
 
+    list_TFLN_sents = []
+
     for n in range(1, 101):
-        # print n
+        print n
 
         url = "http://www.textsfromlastnight.com/texts/page:" + str(n)
-        print url
         soup = makeSoup(url)
-        print '1'
 
         try:
-            print '2'
             textDivList = soup.find_all(attrs={'class': 'content'})
-            print 'here1'
             for textDiv in textDivList:
-                print 'here'
                 textStr = textDiv.find('p').string
-                print textStr
-                try:
-                    pos_quotes = [pos for pos, char in  enumerate(jokeText) if char == '"']
-                    joke = jokeText[pos_quotes[-2]+1:pos_quotes[-1]].strip()
-                    if len(joke.split(' ')) >= 2:
-                        list_TWSS_sents.append(joke)
-
-                except:
+                if 'Text' in textStr and 'Last' in textStr and 'Night' in textStr:
                     continue
+                else:
+                    list_TFLN_sents.append(textStr)                    
 
         except:
             continue
-        break
+        
+    print len(list_TFLN_sents)
 
-    '''
-    print len(list_TWSS_sents)
+    TFLN_file = open('../data/TFLN_sents.txt', 'w')
+    for line in list_TFLN_sents:
+        TFLN_file.write(line.encode('utf-8')+'\n')
 
-    TWSS_file = open('../data/TWSS_sents.txt', 'w')
-    for line in list_TWSS_sents:
-        TWSS_file.write(line.encode('utf-8')+'\n')
-    '''
-retrieveTFLNData()
+if __name__ == '__main__':
+    # retrieveTWSSData()
+    retrieveTFLNData()
+
