@@ -22,15 +22,20 @@ def twss():
 
     brown_file = path.dirname(path.dirname(path.dirname(path.abspath(__file__)))) + '/data/brown_data.pk'
     twss_file = path.dirname(path.dirname(path.dirname(path.abspath(__file__)))) + '/data/TWSS_data.pk' 
+    fml_file = path.dirname(path.dirname(path.dirname(path.abspath(__file__)))) + '/data/FML_data.pk'
+    tfln_file = path.dirname(path.dirname(path.dirname(path.abspath(__file__)))) + '/data/TFLN_data.pk' 
 
-    b_train_sents, b_train_y, b_test_sents, b_test_y = splitTestTrainData(brown_file, 0, 2000)
-    t_train_sents, t_train_y, t_test_sents, t_test_y = splitTestTrainData(twss_file, 1, 2000)
+    brown_train_sents, brown_train_y, brown_test_sents, brown_test_y = splitTestTrainData(brown_file, 0, 666)
+    twss_train_sents, twss_train_y, twss_test_sents, twss_test_y = splitTestTrainData(twss_file, 1, 2000)
+    fml_train_sents, fml_train_y, fml_test_sents, fml_test_y = splitTestTrainData(fml_file, 0, 666)
+    tfln_train_sents, tfln_train_y, tfln_test_sents, tfln_test_y = splitTestTrainData(tfln_file, 0, 666)
+
 
     # Create training and test data by joining Brown and TWSS sets
-    train_sents = b_train_sents + t_train_sents
-    train_y = b_train_y + t_train_y
-    test_sents = b_test_sents + t_test_sents 
-    test_y = b_test_y + t_test_y
+    train_sents = brown_train_sents + twss_train_sents + fml_train_sents + tfln_train_sents
+    train_y = brown_train_y + twss_train_y + fml_train_y + tfln_train_y
+    test_sents = brown_test_sents + twss_test_sents + fml_test_sents + tfln_test_sents
+    test_y = brown_test_y + twss_test_y + fml_test_y + tfln_test_y
 
     print 'Number of training examples:', len(train_sents)
     print 'Number of testing examples:', len(test_sents)
