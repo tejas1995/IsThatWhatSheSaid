@@ -37,7 +37,6 @@ def retrieveTWSSData():
         url = "http://twssstories.com/node?page=" + str(n)
         soup = makeSoup(url)
 
-        # for i in range(10):
 
         try:
             jokeDivList = soup.find_all(attrs={'class': 'content clear-block'})
@@ -132,8 +131,10 @@ def retrieveFMLData():
                 if fmlStr[-1] == '"':
                     pos_quotes = [pos for pos, char in  enumerate(fmlStr) if char == '"']
                     fmlStr = fmlStr[pos_quotes[-2]+1:pos_quotes[-1]].strip()
-                    print "Quote:", fmlStr
-                   
+
+                # If there are multiple sentences, take only the last one
+                if len(sent_detector.tokenize(fmlStr)) > 1:
+                    fmlStr = sent_detector.tokenize(fmlStr)[-1]
 
                 list_FML_sents.append(fmlStr)
 
