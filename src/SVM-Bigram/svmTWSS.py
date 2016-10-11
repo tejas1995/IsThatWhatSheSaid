@@ -80,5 +80,19 @@ def trainTWSS(test=False):
     return svm_classifier
 
 
+def predictTWSS(svm_classifier, list_sents):
+
+    # Tokenize and preprocess sentences
+    tokenized_sents = []
+    for sent in list_sents:
+        tokenized_sent = TWT().tokenize(sent.strip())
+        tokenized_sent = [w.lower() for w in tokenized_sent]
+        tokenized_sents.append(tokenized_sent)
+
+    input_X = extractBigramFeatures(tokenized_sents, bigramVocab)
+    twss_Y = predict(svm_classifier, input_X)
+    return twss_Y
+
+
 if __name__ == '__main__':
     trainTWSS(True)
