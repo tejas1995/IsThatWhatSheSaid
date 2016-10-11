@@ -1,8 +1,12 @@
 import pickle 
 import nltk
+
+from os import sys, path
+from nltk.tokenize.treebank import TreebankWordTokenizer as TWT
+
 from unigramFeatures import *
 from nbClassifier import *
-from os import sys, path
+
 
 if __name__ == '__main__' and __package__ is None:
     sys.path.append(path.dirname(path.dirname(path.abspath(__file__))))
@@ -10,7 +14,7 @@ if __name__ == '__main__' and __package__ is None:
 from processData import splitTestTrainData
 
 
-def twss():
+def trainTWSS(test=False):
 
     '''
     Retrieve training and test sentences and labels
@@ -48,14 +52,35 @@ def twss():
     print "Extracting features for training data..."
     train_X = extractFeatures(train_sents, wordset)
 
-    # Build unigram feature vector for test data
-    print "Extracting features for test data..."
-    test_X = extractFeatures(test_sents, wordset)
-
-    # Classify, predict, evaluate
+    # Train SVM classifier
     nb_classifier = classifier(train_X, train_y)
-    predicted_y = predict(nb_classifier, test_X)
-    evaluate(predicted_y, test_y, test_sents)
+
+    if test is True:
+ 
+        # Build bigram feature vector for test data
+        print "Extracting features for test data..."
+        test_X = extractFeatures(test_sents, wordset)
+
+        # Predict and evaluate results for test data
+        predicted_y = predict(nb_classifier, test_X)
+        evaluate(predicted_y, test_y, test_sents)
+
+    return nb_classifier
+
+
+def predictTWSS(nb_classifier, list_sents):
+
+    # Tokenize and preprocess sentences
+    tokenized_sents = []
+    for sent in list_sents:
+        tokenized_sent = TWT().tokenize(sent.strip())
+        tokenized_sent = [w.lower() for w in tokenized_sent]
+        tokenized_sents.append(tokenized_sent)
+
+    input_X = extractBigramFeatures(tokenized_sents, wordset)
+    twss_Y = predict(nb_classifier, input_X)
+    return twss_Y
+
 
 if __name__ == '__main__':
-    twss()
+    trainTWSS(True)
