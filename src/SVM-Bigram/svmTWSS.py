@@ -1,8 +1,12 @@
 import pickle 
 import nltk
+
+from os import sys, path
+from nltk.tokenize.treebank import TreebankWordTokenizer as TWT
+
 from features import *
 from svmClassifier import *
-from os import sys, path
+
 
 if __name__ == '__main__' and __package__ is None:
     sys.path.append(path.dirname(path.dirname(path.abspath(__file__))))
