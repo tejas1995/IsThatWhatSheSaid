@@ -10,7 +10,7 @@ if __name__ == '__main__' and __package__ is None:
 from processData import splitTestTrainData
 
 
-def twss():
+def trainTWSS(test=False):
 
     '''
     Retrieve training and test sentences and labels
@@ -64,14 +64,21 @@ def twss():
     print "Extracting features for training data..."
     train_X = extractBigramFeatures(train_sents, bigramVocab)
 
-    # Build bigram feature vector for test data
-    print "Extracting features for test data..."
-    test_X = extractBigramFeatures(test_sents, bigramVocab)
-
-    # Classify, predict, evaluate
+    # Train SVM classifier
     svm_classifier = classifier(train_X, train_y)
-    predicted_y = predict(svm_classifier, test_X)
-    evaluate(predicted_y, test_y, test_sents)
+
+    if test is True:
+ 
+        # Build bigram feature vector for test data
+        print "Extracting features for test data..."
+        test_X = extractBigramFeatures(test_sents, bigramVocab)
+
+        # Predict and evaluate results for test data
+        predicted_y = predict(svm_classifier, test_X)
+        evaluate(predicted_y, test_y, test_sents)
+
+    return svm_classifier
+
 
 if __name__ == '__main__':
-    twss()
+    trainTWSS(True)
