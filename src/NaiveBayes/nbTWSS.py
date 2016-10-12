@@ -65,10 +65,10 @@ def trainTWSS(test=False):
         predicted_y = predict(nb_classifier, test_X)
         evaluate(predicted_y, test_y, test_sents)
 
-    return nb_classifier
+    return nb_classifier, wordset
 
 
-def predictTWSS(nb_classifier, list_sents):
+def predictTWSS(nb_classifier, wordset, list_sents):
 
     # Tokenize and preprocess sentences
     tokenized_sents = []
@@ -77,7 +77,7 @@ def predictTWSS(nb_classifier, list_sents):
         tokenized_sent = [w.lower() for w in tokenized_sent]
         tokenized_sents.append(tokenized_sent)
 
-    input_X = extractBigramFeatures(tokenized_sents, wordset)
+    input_X = extractFeatures(tokenized_sents, wordset)
     twss_Y = predict(nb_classifier, input_X)
     return twss_Y
 
