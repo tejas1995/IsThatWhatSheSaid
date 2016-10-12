@@ -6,7 +6,6 @@ def classifier(train_X, train_y):
     Trains Naive Bayes classifier using training data
     '''
     
-    print 'Training Naive Bayes classifier...'
     gnbClassifier = GaussianNB()
     gnbClassifier.fit(train_X, train_y)
     return gnbClassifier
@@ -17,7 +16,6 @@ def predict(classifier, test_X):
     Tests trained NB classifier with test data
     '''
 
-    print 'Predicting from test data...'
     pred_y = classifier.predict(test_X)
     return pred_y
 
