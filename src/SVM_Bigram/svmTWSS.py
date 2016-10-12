@@ -81,10 +81,10 @@ def trainTWSS(test=False):
         predicted_y = predict(svm_classifier, test_X)
         evaluate(predicted_y, test_y, test_sents)
 
-    return svm_classifier
+    return svm_classifier, bigramVocab
 
 
-def predictTWSS(svm_classifier, list_sents):
+def predictTWSS(svm_classifier, bigramVocab, list_sents):
 
     # Tokenize and preprocess sentences
     tokenized_sents = []
