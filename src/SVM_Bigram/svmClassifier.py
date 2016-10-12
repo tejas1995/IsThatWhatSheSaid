@@ -6,7 +6,6 @@ def classifier(train_X, train_y):
     Trains Naive Bayes classifier using training data
     '''
     
-    print 'Training SVM classifier...'
     svmClassifier = svm.LinearSVC()
     svmClassifier.fit(train_X, train_y)
     return svmClassifier
@@ -18,7 +17,6 @@ def predict(classifier, test_X):
     Tests trained SVM classifier with test data
     '''
 
-    print 'Predicting from test data...'
     pred_y = classifier.predict(test_X)
     return pred_y
 

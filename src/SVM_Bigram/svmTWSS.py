@@ -41,9 +41,6 @@ def trainTWSS(test=False):
     test_sents = brown_test_sents + twss_test_sents + fml_test_sents + tfln_test_sents
     test_y = brown_test_y + twss_test_y + fml_test_y + tfln_test_y
 
-    print 'Number of training examples:', len(train_sents)
-    print 'Number of testing examples:', len(test_sents)
-
     '''
     # Use the below for testing with unigram features
 
@@ -61,11 +58,9 @@ def trainTWSS(test=False):
     '''
 
     # Building bigram vocabulary from training sentences
-    print "Building bigram vocabulary..."
     bigramVocab = buildBigramVocab(train_sents)
  
     # Build bigram feature vector for training data
-    print "Extracting features for training data..."
     train_X = extractBigramFeatures(train_sents, bigramVocab)
 
     # Train SVM classifier
@@ -74,7 +69,6 @@ def trainTWSS(test=False):
     if test is True:
  
         # Build bigram feature vector for test data
-        print "Extracting features for test data..."
         test_X = extractBigramFeatures(test_sents, bigramVocab)
 
         # Predict and evaluate results for test data
