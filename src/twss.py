@@ -9,18 +9,21 @@ print "A: Nichael Bott. He's kinda dumb"
 print "B: Scott Von Michael. He's also dumb, but less so."
 
 while(True):
-    typ_clf = raw_input('> ')
+    typ_clf = raw_input('>> ')
 
     # Train classifier for selected Michael Scott
     if(typ_clf == 'A'):
         print "Waking up Nichael Bott..."
         clf, vocab = nbTWSS.trainTWSS()
         predictor = nbTWSS.predictTWSS
+        print "Type any sentence, and Nichael Bott will respond! (q to quit)"
         break
+
     elif(typ_clf == 'B'):
         print "Waking up Scott Von Michael..."
         clf, vocab = svmTWSS.trainTWSS()
         predictor = svmTWSS.predictTWSS
+        print "Type any sentence, and Scott Von Michael will respond! (q to quit)"
         break
 
 while(True):
