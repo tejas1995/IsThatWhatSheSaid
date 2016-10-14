@@ -53,4 +53,21 @@ def retrieveEroticaFiles():
         except:
             continue
 
-retrieveEroticaFiles()    
+# retrieveEroticaFiles()
+
+
+def processEroticaFiles():
+
+    for fileNum in range(100):
+        
+        eroticaFile = open('../data/EROTICA/'+str(fileNum)+'.txt')
+        sents = eroticaFile.readlines()
+        print sents
+        preproc_sents = []
+        for sent in sents:
+            preproc_sent = sent.strip('\r\n')
+            preproc_sents.append(preproc_sent)
+        print preproc_sents
+        break
+
+processEroticaFiles()
