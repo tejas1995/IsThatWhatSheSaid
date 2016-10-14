@@ -1,10 +1,14 @@
 from bs4 import BeautifulSoup
 from urllib2 import urlopen, Request
 import urllib
+import nltk
 
 
 # Set base URLs
 user_agent = "Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.9.0.7) Gecko/2009021910 Firefox/3.0.7"
+
+# Sentence detector to split text into sentences
+sent_detector = nltk.data.load('tokenizers/punkt/english.pickle')
 
 def makeSoup(url):
 
@@ -44,7 +48,7 @@ def retrieveEroticaFiles():
     fileList = getEroticaFileList()
     fileNumber = 0
 
-    for fileUrl in fileList[:1000]:
+    for fileUrl in fileList[:10]:
         try:
             testfile = urllib.URLopener()
             print fileUrl, fileNumber
@@ -58,16 +62,18 @@ def retrieveEroticaFiles():
 
 def processEroticaFiles():
 
-    for fileNum in range(100):
+    for fileNum in range(10):
         
         eroticaFile = open('../data/EROTICA/'+str(fileNum)+'.txt')
         sents = eroticaFile.readlines()
-        print sents
+        # print sents
         preproc_sents = []
         for sent in sents:
             preproc_sent = sent.strip('\r\n')
+            preproc_sent = preproc_sent.replace('\t', '')
             preproc_sents.append(preproc_sent)
-        print preproc_sents
-        break
+        final_sent = ''.join(preproc_sents)
+        print len(sent_detector.tokenize(final_sent))
+        # break
 
 processEroticaFiles()
