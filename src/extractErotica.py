@@ -71,6 +71,9 @@ def processEroticaFiles():
         for sent in sents:
             preproc_sent = sent.strip('\r\n')
             preproc_sent = preproc_sent.replace('\t', '')
+            if len(preproc_sent) > 1:
+                if not preproc_sent[-1] == ' ':
+                    preproc_sent = preproc_sent + ' '
             preproc_sents.append(preproc_sent)
         final_sent = ''.join(preproc_sents)
         print len(sent_detector.tokenize(final_sent))
