@@ -75,8 +75,15 @@ def processEroticaFiles():
                 if not preproc_sent[-1] == ' ':
                     preproc_sent = preproc_sent + ' '
             preproc_sents.append(preproc_sent)
-        final_sent = ''.join(preproc_sents)
-        print len(sent_detector.tokenize(final_sent))
-        # break
+        full_text = ''.join(preproc_sents)
+        print len(sent_detector.tokenize(full_text))
+
+        # Tokenize and tag full_text
+        tokenized_text = nltk.tokenize.wordpunct_tokenize(full_text)
+        tagged_text = nltk.pos_tag(tokenized_text)
+        # if fileNum == 0:
+        #     print tagged_text
+
+
 
 processEroticaFiles()
