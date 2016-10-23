@@ -28,6 +28,10 @@ def getDeviantFeatures():
     erotica_list = pickle.load(erotica_file)
     print erotica_list[0]
 
- 
+    # Define tag lists for nouns, verbs and adjectives
+    nounTagList = ['NN', 'NNP', 'NNPS', 'NNS']
+    verbTagList = ['VB', 'VBD', 'VBG', 'VBN', 'VBP', 'VBZ']
+    adjTagList = ['JJ', 'JJR', 'JJS']
+
 
 getDeviantFeatures()
