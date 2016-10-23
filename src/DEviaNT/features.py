@@ -22,6 +22,12 @@ def getDeviantFeatures():
     BP_list = [s.strip() for s in BP_list]
     print BP_list
 
+    # Load tagged erotica
+    erotica_filename = path.dirname(path.dirname(path.dirname(path.abspath(__file__)))) + '/data/erotica_data.pk'
+    erotica_file = open(erotica_filename)
+    erotica_list = pickle.load(erotica_file)
+    print erotica_list[0]
 
+ 
 
 getDeviantFeatures()
