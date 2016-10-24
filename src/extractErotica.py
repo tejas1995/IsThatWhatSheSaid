@@ -81,14 +81,13 @@ def processEroticaFiles():
                     preproc_sent = preproc_sent + ' '
             preproc_sents.append(preproc_sent)
         full_text = ''.join(preproc_sents)
-        print len(sent_detector.tokenize(full_text))
+        text_sents = sent_detector.tokenize(full_text)
 
-        # Tokenize and tag full_text
-        tokenized_text = nltk.tokenize.wordpunct_tokenize(full_text)
-        tagged_text = nltk.pos_tag(tokenized_text)
-        taggedEroticaList.append(tagged_text)
-        # if fileNum == 0:
-        #     print tagged_text
+        # Tokenize and tag all sents in text_sents
+        for sent in text_sents:
+            tokenized_sent = nltk.tokenize.wordpunct_tokenize(sent)
+            tagged_sent = nltk.pos_tag(tokenized_sent)
+            taggedEroticaList.append(tagged_sent)
 
     erotica_file = path.dirname(path.dirname(path.abspath(__file__))) + '/data/erotica_data.pk'
     erotica_pickle = open(erotica_file, 'wb')
