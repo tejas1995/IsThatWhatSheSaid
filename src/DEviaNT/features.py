@@ -8,7 +8,9 @@ if __name__ == '__main__' and __package__ is None:
     sys.path.append(path.dirname(path.dirname(path.abspath(__file__))))
 
 
-def getDeviantFeatures():
+def extractDeviantFeatures(list_sents):
+
+    sent_features = []
 
     # load SN list
     SN_filename = path.dirname(path.dirname(path.dirname(path.abspath(__file__)))) + '/data/SN.txt'
@@ -33,5 +35,32 @@ def getDeviantFeatures():
     verbTagList = ['VB', 'VBD', 'VBG', 'VBN', 'VBP', 'VBZ']
     adjTagList = ['JJ', 'JJR', 'JJS']
 
+    # Define features for every sentence in list_sents
+    for s in list_sents:
 
-getDeviantFeatures()
+        s_features = []
+
+        # Does s contain a noun belonging to SN?
+        nounInSNFtr = 0
+        for token in s:
+            if token[1] in nounTagList:
+                if token[0] in SN_list:
+                    nounInSNFtr = 1
+        print nounInSNFtr
+        s_features.append(nounInSNFtr)
+
+        # Does s contain a noun belonging to BP?
+        nounInBPFtr = 0
+        for token in s:
+            if token[1] in nounTagList:
+                if token[0] in BP_list:
+                    nounInBPFtr = 1
+        print nounInBPFtr
+        s_features.append(nounInBPFtr)
+
+        sent_features.append(s_features)
+
+    return sent_features
+
+
+extractDeviantFeatures([])
