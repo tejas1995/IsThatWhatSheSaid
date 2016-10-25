@@ -28,18 +28,22 @@ def extractDeviantFeatures(list_sents):
     erotica_filename = path.dirname(path.dirname(path.dirname(path.abspath(__file__)))) + '/data/erotica_data.pk'
     erotica_file = open(erotica_filename)
     erotica_list = pickle.load(erotica_file)
-    print erotica_list[0]
+    for erotica_sent in erotica_list[:10]:
+        print erotica_sent
 
     # Define tag lists for nouns, verbs and adjectives
     nounTagList = ['NN', 'NNP', 'NNPS', 'NNS']
     verbTagList = ['VB', 'VBD', 'VBG', 'VBN', 'VBP', 'VBZ']
     adjTagList = ['JJ', 'JJR', 'JJS']
+    punctTagList = ['$', "''", '(', ')', ',', '--', '.', ':']
 
     # Define features for every sentence in list_sents
     for s in list_sents:
 
         s_features = []
 
+
+        # NOUN-EUPHEMISM features
         # Does s contain a noun belonging to SN?
         nounInSNFtr = 0
         for token in s:
@@ -57,6 +61,18 @@ def extractDeviantFeatures(list_sents):
                     nounInBPFtr = 1
         print nounInBPFtr
         s_features.append(nounInBPFtr)
+
+        # STRUCTURAL features
+        numPunctTokens = 0
+        numNonPunctTokens = 0
+        for token in s:
+            if token[1] in punctTagList:
+                numPunctTokens += 1
+            else:
+                numNonPunctTokens += 1
+        s_features.append(numPunctTokens)
+        s_features.append(numNonPunctTokens)
+
 
         sent_features.append(s_features)
 
