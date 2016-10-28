@@ -36,6 +36,7 @@ def extractDeviantFeatures(list_sents):
     verbTagList = ['VB', 'VBD', 'VBG', 'VBN', 'VBP', 'VBZ']
     adjTagList = ['JJ', 'JJR', 'JJS']
     punctTagList = ['$', "''", '(', ')', ',', '--', '.', ':']
+    prpSubjList = ['he', 'she', 'it', 'i', 'you']
 
     # Define features for every sentence in list_sents
     for s in list_sents:
@@ -63,6 +64,7 @@ def extractDeviantFeatures(list_sents):
         s_features.append(nounInBPFtr)
 
         # STRUCTURAL features
+        # How many punctuation and non-punctuation tokens does s have?
         numPunctTokens = 0
         numNonPunctTokens = 0
         for token in s:
@@ -72,6 +74,20 @@ def extractDeviantFeatures(list_sents):
                 numNonPunctTokens += 1
         s_features.append(numPunctTokens)
         s_features.append(numNonPunctTokens)
+
+        # Subject type feature = 0-4 for commoun subject pronouns, 5 for other pronouns, 6 for nouns
+        subjTypeFtr=0
+        for token in s:
+            if token[0].lower() in prpSubjList:
+                subjTypeFtr = prpSubjList.index(token[0].lower())
+                break
+            elif token[1] == 'PRP':
+                subjTypeFtr = len(prpSubjList)
+                break
+            elif token[1] in nounTagList:
+                subjTypeFtr = len(prpSubjList)+1
+                break
+        s_features.append(subjTypeFtr)
 
 
         sent_features.append(s_features)
