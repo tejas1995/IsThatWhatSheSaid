@@ -44,8 +44,10 @@ def extractDeviantFeatures(list_sents):
 
         s_features = []
 
-
+        # ----------------------------------------------
         # NOUN-EUPHEMISM features
+        # ----------------------------------------------
+
         # Does s contain a noun belonging to SN?
         nounInSNFtr = 0
         for token in s:
