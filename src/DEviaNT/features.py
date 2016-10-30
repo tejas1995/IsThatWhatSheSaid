@@ -36,6 +36,7 @@ def extractDeviantFeatures(list_sents):
     verbTagList = ['VB', 'VBD', 'VBG', 'VBN', 'VBP', 'VBZ']
     adjTagList = ['JJ', 'JJR', 'JJS']
     punctTagList = ['$', "''", '(', ')', ',', '--', '.', ':']
+    posList = ['$', '"', '(', ')', ',', '--', '.', ':', 'CC', 'CD', 'DT', 'FW', 'IN', 'JJ', 'MD', 'NN', 'NNP', 'NNPS', 'NNS', 'PDT', 'POS', 'PRP', 'PRP$', 'RB', 'RBR', 'RP', 'SYM', 'TO', 'UH', 'VB', 'VBD', 'VBG', 'VBN', 'VBP', 'VBZ', 'WDT', 'WP']
     prpSubjList = ['he', 'she', 'it', 'i', 'you']
 
     # Define features for every sentence in list_sents
@@ -63,7 +64,10 @@ def extractDeviantFeatures(list_sents):
         print nounInBPFtr
         s_features.append(nounInBPFtr)
 
-        # STRUCTURAL features
+        # ----------------------------------------------
+        # BASIC-STRUCTURE OF TWSS features
+        # ----------------------------------------------
+
         # How many punctuation and non-punctuation tokens does s have?
         numPunctTokens = 0
         numNonPunctTokens = 0
@@ -89,6 +93,14 @@ def extractDeviantFeatures(list_sents):
                 break
         s_features.append(subjTypeFtr)
 
+        # Number of occurences of each pronoun and POS
+        prnPosFreq = [0]*(len(posList)+len(prpSubjList))
+        for token in s:
+            if token[1] in posList:
+                prnPosFreq[posList.index(token[1])] += 1
+            if token[0].lower() in prpSubjList:
+                prnPosFreq[len(posList)+prpSubjList.index(token[0].lower())] += 1
+        s_features += prnPosFreq
 
         sent_features.append(s_features)
 
