@@ -27,8 +27,8 @@ def extractDeviantFeatures(list_sents):
     # Load tagged erotica
     erotica_filename = path.dirname(path.dirname(path.dirname(path.abspath(__file__)))) + '/data/erotica_data.pk'
     erotica_file = open(erotica_filename)
-    erotica_list = pickle.load(erotica_file)
-    for erotica_sent in erotica_list[:10]:
+    SE = pickle.load(erotica_file)
+    for erotica_sent in SE[:10]:
         print erotica_sent
 
     # Define tag lists for nouns, verbs and adjectives
@@ -65,6 +65,24 @@ def extractDeviantFeatures(list_sents):
                     nounInBPFtr = 1
         print nounInBPFtr
         s_features.append(nounInBPFtr)
+
+
+        # ----------------------------------------------
+        # STRUCTURAL-ELEMENTS features
+        # ----------------------------------------------
+
+        # Does s contain a verb that never occurs in erotic sentences set SE?
+        hasNonEroticVerb = 0
+        for token in s:
+            if token[1] in verbTagList:
+                for sent in SE:
+                    if token[0] not in [t[0] for t in sent]:
+                        hasNonEroticVerb = 1
+                        break
+            if hasNonEroticVerb is 1:
+                    break
+        s_features.append(hasNonEroticVerb)
+
 
         # ----------------------------------------------
         # BASIC-STRUCTURE OF TWSS features
