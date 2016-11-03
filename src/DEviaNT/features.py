@@ -16,20 +16,18 @@ def extractDeviantFeatures(list_sents):
     SN_filename = path.dirname(path.dirname(path.dirname(path.abspath(__file__)))) + '/data/SN.txt'
     SN_list = open(SN_filename).readlines()
     SN_list = [s.strip() for s in SN_list]
-    print SN_list
 
     # Load BP list
     BP_filename = path.dirname(path.dirname(path.dirname(path.abspath(__file__)))) + '/data/BP.txt'
     BP_list = open(BP_filename).readlines()
     BP_list = [s.strip() for s in BP_list]
-    print BP_list
 
     # Load tagged erotica
     erotica_filename = path.dirname(path.dirname(path.dirname(path.abspath(__file__)))) + '/data/erotica_data.pk'
     erotica_file = open(erotica_filename)
     SE = pickle.load(erotica_file)
-    for erotica_sent in SE[:10]:
-        print erotica_sent
+    # for erotica_sent in SE[:10]:
+    #    print erotica_sent
 
     # Define tag lists for nouns, verbs and adjectives
     nounTagList = ['NN', 'NNP', 'NNPS', 'NNS']
@@ -54,7 +52,7 @@ def extractDeviantFeatures(list_sents):
             if token[1] in nounTagList:
                 if token[0] in SN_list:
                     nounInSNFtr = 1
-        print nounInSNFtr
+        # print nounInSNFtr
         s_features.append(nounInSNFtr)
 
         # Does s contain a noun belonging to BP?
@@ -63,7 +61,7 @@ def extractDeviantFeatures(list_sents):
             if token[1] in nounTagList:
                 if token[0] in BP_list:
                     nounInBPFtr = 1
-        print nounInBPFtr
+        # print nounInBPFtr
         s_features.append(nounInBPFtr)
 
 
